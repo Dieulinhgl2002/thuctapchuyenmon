@@ -1,0 +1,113 @@
+﻿@model Model.EntityFramework.Product
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listProduct = (List<Model.EntityFramework.Product>)ViewBag.ListProductLQ;
+
+}
+<style>
+    ._2tga._8j9w{
+        font-size: 11px;
+    }
+</style>
+@{Html.RenderAction("ProductCategory", "Product");}
+<div class="w3l_banner_nav_right">
+ 
+    <div class="agileinfo_single">
+        <h5>@Model.Name</h5>
+        <div class="col-md-4 agileinfo_single_left">
+            <img id="example" src="@Model.Image" alt=" " class="img-responsive" />
+        </div>
+        <div class="col-md-8 agileinfo_single_right">
+            <div class="rating1">
+                <span class="starRating">
+                    <input id="rating5" type="radio" name="rating" value="5">
+                    <label for="rating5">5</label>
+                    <input id="rating4" type="radio" name="rating" value="4" checked>
+                    <label for="rating4">4</label>
+                    <input id="rating3" type="radio" name="rating" value="3">
+                    <label for="rating3">3</label>
+                    <input id="rating2" type="radio" name="rating" value="2">
+                    <label for="rating2">2</label>
+                    <input id="rating1" type="radio" name="rating" value="1">
+                    <label for="rating1">1</label>
+                </span>
+            </div>
+            <div class="w3agile_description">
+                <h4>Description:</h4>
+                <p>
+                    @Model.Description
+                </p>
+            </div>
+            <div class="snipcart-item block">
+                <div class="snipcart-thumb agileinfo_single_right_snipcart">
+                    <h4>@Model.Price</h4>
+                </div>
+                <div class="snipcart-details agileinfo_single_right_details">
+                    <a data-id="@Model.ID" class="btn btn-danger btnAddItem">Thêm vào giỏ</a>
+                </div>
+            </div>
+        </div>
+        <div class="fb-like" data-href="@Request.Url.AbsoluteUri" data-width="" data-layout="button" data-action="like" data-size="large" data-share="true"></div>
+        <div class="clearfix"> </div>
+        <div class="fb-comments" data-href="@Request.Url.AbsoluteUri" data-width="800" data-numposts="5"></div>
+    </div>
+</div>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v11.0&appId=333334491176312&autoLogAppEvents=1" nonce="sSntOMBC"></script>
+@section topBrand{
+    <div class="top-brands">
+        <div class="container">
+            <h3>CÙNG DANH MỤC</h3>
+            <div class="agile_top_brands_grids">
+                @foreach (var item in listProduct)
+                {
+                    <div class="col-md-3 top_brand_left">
+                        <div class="hover14 column">
+                            <div class="agile_top_brand_left_grid">
+                                <div class="agile_top_brand_left_grid1">
+                                    <figure>
+                                        <div class="snipcart-item block">
+                                            <div class="snipcart-thumb">
+                                                <a href="/products/@item.Name/@item.ID"><img title=" " alt=" " style="width:300px;height:200px" src="../../@item.Image" /></a>
+                                                <p>@item.Name</p>
+                                                <h4>@item.Price </h4>
+                                            </div>
+                                            <div class="snipcart-details top_brand_home_details">
+                                                <a data-id="@item.ID" class="btn btn-danger btnAddItem">Thêm vào giỏ</a>
+                                            </div>
+                                        </div>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section jsFooter{
+    <script>
+        $('.btnAddItem').off('click').on('click', function () {
+            $.ajax({
+                data: { productID: $(this).data('id'), quantity: 1 },
+                url: '/Cart/AddItem',
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.status == true) {
+                        console.log("True");
+                    } else {
+                        console.log("False");
+                    }
+                }
+            })
+            $(this).html("Đã thêm vào giỏ");
+            $(this).attr('disabled', 'disabled');
+        });
+    </script>
+}

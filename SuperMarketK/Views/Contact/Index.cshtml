@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section treeMap{
+    <div class="products-breadcrumb">
+        <div class="container">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Home</a><span>|</span></li>
+                <li>Contact Us</li>
+            </ul>
+        </div>
+    </div>
+}
+<style>
+    #map {
+        width: 100%;
+        height: 500px;
+    }
+</style>
+@section jsFooter{
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="/Assets/client/js/controller/contactController.js"></script>
+    <script>
+        function initMap() {
+            const mySchool = { lat: 10.845587, lng: 106.794632 };
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 18,
+                center: mySchool,
+            });
+
+            const marker = new google.maps.Marker({
+                position: mySchool,
+                title: "MOLLA STORE",
+                map: map,
+            });
+
+            const info = '<b>MOLLA STORE</b>'
+                + '<br>Địa chỉ: 451 Lê Văn Việt, Tăng Nhơn Phú A, Quận 9, Thành Phố Hồ Chí Minh';
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: info,
+            });
+
+            marker.addListener("click", () => {
+                infoWindow.open(map, marker);
+            });
+        }
+        initMap();
+    </script>
+
+}
+<!-- mail -->
+<div class="mail">
+    <h3>Liên hệ</h3>
+
+    <div class="agileinfo_mail_grids">
+        <div class="col-md-4 agileinfo_mail_grid_left">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i></li>
+                <li>address<span>Quận 9, TP. Hồ Chí Minh</span></li>
+            </ul>
+            <ul>
+                <li><i class="fa fa-envelope" aria-hidden="true"></i></li>
+                <li>email<span><a href="mailto:info@example.com">molla@gmail.com</a></span></li>
+            </ul>
+            <ul>
+                <li><i class="fa fa-phone" aria-hidden="true"></i></li>
+                <li>call to us<span>(+84) 123 456 789</span></li>
+            </ul>
+        </div>
+        @*<div class="col-md-8 agileinfo_mail_grid_right">
+            <form>
+                <div class="col-md-6 wthree_contact_left_grid">
+                    <input type="text" name="Name" id="txtName" required="">
+                    <input type="email" name="Email" id="txtEmail" required="">
+                </div>
+                <div class="col-md-6 wthree_contact_left_grid">
+                    <input type="text" name="Telephone" id="txtSDT" required="">
+                    <input type="text" name="Address" id="txtDiaChi" required="">
+                </div>
+                <div class="clearfix"> </div>
+                <textarea name="Message" id="txtTinNhan" required=""></textarea>
+                <input value="Submit" id="btnSend" type="button" class="btn btn-danger" style="margin-left: 15px; width: 46.6%; height: 40px">
+                <input type="reset" value="Clear" class="btn btn-danger">
+
+            </form>
+        </div>*@
+        <div class="clearfix"> </div>
+    </div>
+</div>
+<div id="map">
+
+</div>
+<!-- //mail -->

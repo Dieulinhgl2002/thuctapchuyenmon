@@ -1,0 +1,97 @@
+﻿@model Model.EntityFramework.ProductCategory
+@{
+    ViewBag.Title = @Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var listProduct = (List<Model.EntityFramework.Product>)ViewBag.ListProductByID;
+    int n = listProduct.Count / 4;
+    if (listProduct.Count % 4 != 0)
+    {
+        n++;
+    }
+    int count = 0;
+    int size = listProduct.Count;
+    int m = size - 4 > 0 ? 4 : size;
+}
+
+@section treeMap{
+    <div class="products-breadcrumb">
+        <div class="container">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Home</a><span>|</span></li>
+                <li>@Model.Name</li>
+            </ul>
+        </div>
+    </div>
+}
+@section topBrand{
+    @{Html.RenderAction("TopBrand", "Home");}
+}
+@{Html.RenderAction("ProductCategory", "Product");}
+<div class="w3l_banner_nav_right">
+    <div class="w3ls_w3l_banner_nav_right_grid w3ls_w3l_banner_nav_right_grid_sub">
+        <h3 class="w3l_fruit">@Model.Name</h3>
+        @for (int i = 0; i < n; i++)
+        {
+            <div class="w3ls_w3l_banner_nav_right_grid1 w3ls_w3l_banner_nav_right_grid1_veg">
+                @{
+                    for (int j = 0; j < m; j++)
+                    {
+                        <div class="col-md-3 w3ls_w3l_banner_left w3ls_w3l_banner_left_asdfdfd">
+                            <div class="hover14 column">
+
+                                <div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+
+                                    <div class="agile_top_brand_left_grid1">
+                                        <figure>
+                                            <div class="snipcart-item block">
+                                                <div class="snipcart-thumb">
+                                                    <a href="../products/@listProduct[count].Name/@listProduct[count].ID" rel="nofollow"><img src="../@listProduct[count].Image" alt=" " class="img-responsive" /></a>
+                                                    <p>@listProduct[count].Name</p>
+                                                    <h4>@listProduct[count].Price.GetValueOrDefault(0).ToString("N0")</h4>
+                                                </div>
+                                                <div class="snipcart-details">
+                                                    <a data-id="@listProduct[count].ID" class="btn btn-danger btnAddItem">Thêm vào giỏ</a>
+                                                </div>
+                                            </div>
+                                        </figure>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        count++;
+                    }
+                    size = size - 4;
+                    m = size - 4 > 0 ? 4 : size;
+                }
+                <div class="clearfix"> </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+@section jsFooter{
+    <script>
+        $('.btnAddItem').off('click').on('click', function () {
+            $.ajax({
+                data: { productID: $(this).data('id'), quantity: 1 },
+                url: '/Cart/AddItem',
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.status == true) {
+                        console.log("True");
+                    } else {
+                        console.log("False");
+                    }
+                }
+            })
+            $(this).html("Đã thêm vào giỏ");
+            $(this).attr('disabled', 'disabled');
+        });
+    </script>
+}

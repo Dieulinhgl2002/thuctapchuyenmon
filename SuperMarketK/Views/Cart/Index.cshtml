@@ -1,0 +1,203 @@
+﻿@model SuperMarketK.Models.CardInfo
+@{
+    ViewBag.Title = "Cart";
+    var session = Session["CartSession"];
+    var listItem = new List<SuperMarketK.Models.CartItem>(); 
+    if (session != null)
+    {
+        listItem = (List<SuperMarketK.Models.CartItem>)session;
+    }
+
+    int i = 1;
+    string rem = null;
+}
+@section jsFooter{
+    <script src="/Assets/client/js/controller/cartController.js"></script>
+    <script src="/Assets/client/js/controller/addressController.js"></script>
+}
+@section treeMap{
+    <div class="products-breadcrumb">
+        <div class="container">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Home</a><span>|</span></li>
+                <li>Giỏ Hàng</li>
+            </ul>
+        </div>
+    </div>
+}
+@{Html.RenderAction("ProductCategory", "Product");}
+@if (listItem.Count > 0)
+{
+    <div class="w3l_banner_nav_right">
+        <!-- about -->
+        <div class="privacy about">
+            <h3>Chec<span>kout</span></h3>
+
+            <div class="checkout-right">
+                <h4>Your shopping cart contains: <span>@listItem.Count Products</span></h4>
+                <table class="timetable_sub">
+                    <thead>
+                        <tr>
+                            <th>SL No.</th>
+                            <th>Product</th>
+                            <th>Quality</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in listItem)
+                        {
+                            rem = "rem" + @i;
+                            <tr class="@rem">
+                                <td class="invert">@i</td>
+                                <td class="invert-image"><a href="single.html"><img src="@item.product.Image" alt=" " class="img-responsive"></a></td>
+                                <td class="invert">
+                                    <div class="quantity">
+                                        <div class="quantity-select">
+                                            <div class="entry value-minus" data-id="@item.product.ID">&nbsp;</div>
+                                            <div class="entry value"><span>@item.Quantity</span></div>
+                                            <div class="entry value-plus active" data-id="@item.product.ID">&nbsp;</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="invert">@item.product.Name</td>
+                                <td class="invert" id="@item.product.ID">@(item.product.Price * item.Quantity)</td>
+                                <td class="invert">
+                                    <div class="rem">
+                                        @{string classMove = "close" + @i;}
+                                        <div class="btn-danger" data-id="@item.product.ID">Xóa</div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            i++;
+                        }
+
+
+
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="grid-out-all">
+                <div class="checkout-left">
+                    <div class="col-md-12 address_form_agile">
+                        <h4>DETAIL SHIP DELIVERY</h4>
+                        @using (Html.BeginForm("Payment", "Cart", FormMethod.Post, new { @class = "creditly-card-form agileinfo_form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <section class="creditly-wrapper wthree, w3_agileits_wrapper">
+                                <div class="information-wrapper">
+                                    <div class="first-row form-group">
+                                        <div class="controls">
+                                            <label class="control-label">Họ và tên: </label>
+                                            @Html.EditorFor(item => item.name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập họ tên" } })
+                                            @Html.ValidationMessageFor(item => item.name, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="w3_agileits_card_number_grids">
+                                            <div class="w3_agileits_card_number_grid_left">
+                                                <div class="controls">
+                                                    <label class="control-label">Điện thoại: </label>
+                                                    @Html.EditorFor(item => item.mobile, new { htmlAttributes = new { @class = "form-control", type = "tel", pattern = @"^\d{10,}$", placeholder = "Nhập số điện thoại" } })
+                                                    @Html.ValidationMessageFor(item => item.mobile, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="clear"> </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <label class="control-label">Địa chỉ: </label>
+                            <div class="controls grid-v">
+                                <div class="form-group">
+                                    <select id="ddlProvince" class="form-control" name="tinh">
+                                    </select>
+                                </div>
+                                @Html.Hidden("ProvinceName", null, new { @id = "ProvinceName" })
+                                @Html.Hidden("huyen", null, new { @id = "huyen" })
+                                @Html.Hidden("xa", null, new { @id = "xa" })
+                                <div class="form-group">
+                                    <select id="ddlDistrict" class="form-control" name="huyen">
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select id="ddlWard" class="form-control" name="xa">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.EditorFor(item => item.address, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập vào tên đường" } })
+                                @Html.ValidationMessageFor(item => item.address, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="controls">
+                                <div style="margin-bottom: 10px">
+                                    <label class="control-label">Hình thức thanh toán: </label>
+                                </div>
+                                <div style="padding: 10px; border:1px solid #e7e7e7;margin-bottom: 20px">
+                                    <div class="form-check" style="margin-bottom: 10px">
+                                        <input class="form-check-label" type="radio" name="pay" value="false" id="flexRadioDefault1" checked>
+                                        <img class="method-icon" width="32" style="margin-right: 10px"
+                                             src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/checkout/icon-payment-method-cod.svg" alt="cod">
+
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            <span>Thanh toán tiền mặt khi nhận hàng</span>
+                                        </label>
+
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="pay" value="true" id="flexRadioDefault2">
+                                        <img class="method-icon" width="32" style="margin-right: 10px" src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/checkout/icon-payment-method-mo-mo.svg" alt="momo">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Thanh toán bằng ví MoMo
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="submit check_out">Xác Nhận</button>
+                        }
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="grid-right">
+                    <label>TIỀN THANH TOÁN</label> 
+                    <div class="total-v">
+                        <div class="cost-h"><label>Tiền hàng:</label><label id="tienHang"> @listItem.Sum(x => x.Quantity * x.product.Price).GetValueOrDefault().ToString("N0") <span>VNĐ</span></label></div>
+                        <div class="cost-h"><label>Tiền vận chuyển:</label><label id="tienShip">0 <span>VNĐ</span></label></div>
+                        <div class="cost-h total"><label>Tổng tiền:</label><label id="tongTien"> @listItem.Sum(x => x.Quantity * x.product.Price).GetValueOrDefault().ToString("N0") <span>VNĐ</span></label></div>
+                    </div>
+                </div>
+            </div>
+           
+
+        </div>
+        <!-- //about -->
+    </div>
+}
+else
+{
+
+    <div class="row w3l_banner_nav_right">
+        <div class="col-lg-offset-3" style="margin-top: 50px">
+            <img class="rounded" src="~/Assets/client/images/giohang.png" />
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $("body").on("change", "#ddlProvince", function () {
+        $("#ProvinceName").val($(this).find("option:selected").text());
+    });
+    $("body").on("change", "#ddlDistrict", function () {
+        $("#huyen").val($(this).find("option:selected").text());
+    });
+    $("body").on("change", "#ddlWard", function () {
+        $("#xa").val($(this).find("option:selected").text());
+    });
+</script>
+

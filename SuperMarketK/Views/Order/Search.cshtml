@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Tra cứu đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section treeMap{
+    <div class="products-breadcrumb">
+        <div class="container">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Home</a><span>|</span></li>
+                <li>Kiểm tra đơn hàng</li>
+            </ul>
+        </div>
+    </div>
+}
+<h2 class="col-md-offset-5" style="margin-top: 20px">Kiểm tra đơn hàng</h2>
+@using (Html.BeginForm("Search", "Order"))
+{
+    <div class="form-horizontal">
+        <hr />
+        <div class="text-success col-md-offset-3" style="margin-bottom:10px">
+            @ViewBag.Message
+        </div>
+        <div class="form-group">
+            <label class="col-md-offset-3">Nhập ID đơn hàng: </label>
+            @Html.TextBox("order_id", "", new { @size = "65" })
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-8">
+                <input type="submit" value="Submit" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}

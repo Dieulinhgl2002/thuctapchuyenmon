@@ -1,0 +1,75 @@
+﻿@model List<Model.EntityFramework.Slide>
+@{
+    ViewBag.Title = "Trang chủ";
+}
+@section topBrand{
+    @{Html.RenderAction("TopBrand", "Home");}
+}
+@section rauCuQua{
+    @{Html.RenderAction("TopRecommend", "Home");}
+}
+@{Html.RenderAction("ProductCategory", "Product");}
+    <link rel="stylesheet" href="~/Assets/client/css/style3.css" type="text/css" media="screen" property="" />
+    <link rel="stylesheet" href="~/Assets/client/css/lightslider.css" type="text/css" media="screen" property="" />
+    <script src="~/Assets/client/js/lightslider.js"></script>
+    <div class="w3l_banner_nav_right">
+        <!-- slider đây rồi -->
+        <ul id="adaptive" class="cs-hidden">
+            @foreach (var item in Model)
+            {
+                <li class="item-a">
+                    <div class="full-slider-box" style="background-image: url(@item.Image)">
+                        <a href="@item.Link"></a>
+                    </div>
+                </li>
+            }
+        </ul>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#adaptive').lightSlider({
+                    adaptiveHeight: true,
+                    auto: true,
+                    item: 1,
+                    slideMargin: 0,
+                    loop: true
+                });
+            });
+        </script>
+        <!-- Kết thúc slider nhé -->
+        <!-- flexSlider -->
+        <link rel="stylesheet" href="~/Assets/client/css/flexslider.css" type="text/css" media="screen" property="" />
+        <script defer src="~/Assets/client/js/jquery.flexslider.js"></script>
+        <script type="text/javascript">
+            $(window).load(function () {
+                $('.flexslider').flexslider({
+                    animation: "slide",
+                    start: function (slider) {
+                        $('body').removeClass('loading');
+                    }
+                });
+            });
+        </script>
+        <!-- //flexSlider -->
+    </div>
+
+@section jsFooter{
+    <script>
+        $('.btnAddItem').off('click').on('click', function () {
+            $.ajax({
+                data: { productID: $(this).data('id'), quantity: 1 },
+                url: '/Cart/AddItem',
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.status == true) {
+                        console.log("True");
+                    } else {
+                        console.log("False");
+                    }
+                }
+            })
+            $(this).html("Đã thêm vào giỏ");
+            $(this).attr('disabled', 'disabled');
+        });
+    </script>
+}

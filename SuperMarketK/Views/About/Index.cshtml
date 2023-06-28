@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewBag.Title = "About Us";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section treeMap{
+    <div class="products-breadcrumb">
+        <div class="container">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Home</a><span>|</span></li>
+                <li>About Us</li>
+            </ul>
+        </div>
+    </div>
+}
+
+
+@{Html.RenderAction("ProductCategory", "Product");}
+<div class="w3l_banner_nav_right">
+    <!-- about -->
+    <div class="privacy about">
+        <h3>About Us</h3>
+        <p class="animi">
+            MOLLA là một cửa hàng chuyên về bán linh kiện điện tử, 
+            nơi bạn có thể tìm thấy đa dạng sản phẩm chất lượng cao và dịch vụ tận tâm. 
+            Với sứ mệnh cung cấp những linh kiện điện tử chất lượng nhất, 
+            MOLLA đã trở thành địa điểm ưa thích của cả những người đam mê công nghệ và các kỹ sư điện tử.
+
+            Tại MOLLA, chúng tôi tự hào cung cấp một bộ sưu tập đa dạng 
+            và phong phú về linh kiện điện tử từ các nhà sản xuất hàng đầu trên thế giới. 
+            Với hàng ngàn sản phẩm khác nhau, chúng tôi đáp ứng được nhu cầu của các dự án từ nhỏ đến lớn, 
+            từ cá nhân đến doanh nghiệp.
+
+            Chất lượng là tiêu chí hàng đầu tại MOLLA. 
+            Chúng tôi chỉ cung cấp những linh kiện điện tử chính hãng và được kiểm tra chất lượng một cách cẩn thận 
+            trước khi đưa ra thị trường. Đội ngũ nhân viên giàu kinh nghiệm của chúng tôi sẽ 
+            tư vấn và hỗ trợ bạn trong việc lựa chọn linh kiện phù hợp cho mục đích sử dụng của bạn.
+
+            Bên cạnh việc cung cấp sản phẩm chất lượng, chúng tôi cam kết đem đến dịch vụ tốt nhất cho khách hàng. Chúng tôi luôn sẵn sàng lắng nghe và giải đáp mọi câu hỏi, đồng thời đảm bảo giao hàng nhanh chóng và đúng hẹn. Với MOLLA, bạn sẽ có trải nghiệm mua sắm trực tuyến thuận tiện và an tâm.
+        </p>
+        <div class="agile_about_grids">
+            <div class="col-md-6 agile_about_grid_right">
+                <img src="~/Assets/client/images/THẾ GIỚI.jpg" alt=" " class="img-responsive" />
+            </div>
+            <div class="col-md-6 agile_about_grid_left">
+                <ol>
+                    <li>Sản phẩm đa dạng, phong phú</li>
+                    <li>Hàng hóa luôn được cập nhật mỗi ngày</li>
+                    <li>Nhân viên thân thiện, nhanh nhẹn</li>
+                    <li>Giao hàng trong ngày</li>
+                    <li>Nơi mua sắm an toàn, đáng tin cậy</li>
+                </ol>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <!-- //about -->
+</div>
+
+
+@section aboutTeam{
+    <div class="team">
+        <div class="container">
+            <h3>Amazing Team</h3>
+            <div class="agileits_team_grids">
+                <div class="col-md-3 agileits_team_grid">
+                    <img src="~/Assets/client/images/Linh.jpg" alt=" " class="img-responsive" />
+                    <h4>Dieu Linh</h4>
+                    <p>Front-end</p>
+                    <ul class="agileits_social_icons agileits_social_icons_team">
+                        <li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 agileits_team_grid">
+                    <img src="~/Assets/client/images/Linh.jpg" alt=" " class="img-responsive" />
+                    <h4>Dieu Linh</h4>
+                    <p>Back-end</p>
+                    <ul class="agileits_social_icons agileits_social_icons_team">
+                        <li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 agileits_team_grid">
+                    <img src="~/Assets/client/images/Linh.jpg" alt=" " class="img-responsive" />
+                    <h4>Dieu Linh</h4>
+                    <p>Designer</p>
+                    <ul class="agileits_social_icons agileits_social_icons_team">
+                        <li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 agileits_team_grid">
+                    <img src="~/Assets/client/images/Linh.jpg" alt=" " class="img-responsive" />
+                    <h4>Dieu Linh</h4>
+                    <p>Tester</p>
+                    <ul class="agileits_social_icons agileits_social_icons_team">
+                        <li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+

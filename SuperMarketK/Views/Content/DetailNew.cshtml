@@ -1,0 +1,306 @@
+﻿@model Model.EntityFramework.Content
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string linkPost = null;
+    List<Model.EntityFramework.Content> listXemNhieu = (List<Model.EntityFramework.Content>)ViewBag.ListXemNhieu;
+    string currentURL = Request.Url.AbsoluteUri;
+  //  string urlShare = "https://www.facebook.com/sharer/sharer.php?u="+currentURL+";src=sdkpreparse";
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
+<script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+@section treeMap{
+    <div class="products-breadcrumb">
+        <div class="container">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Home</a><span>|</span></li>
+                <li>Tin tức</li>
+            </ul>
+        </div>
+    </div>
+}
+<head>
+    <link rel="stylesheet" href="/Assets/blog/css/all.css">
+    <link rel="stylesheet" href="/Assets/blog/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/Assets/blog/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/Assets/blog/css/aos.css">
+    <link rel="stylesheet" href="/Assets/blog/css/Style.css">
+    <style>
+        p {
+            font-size: 1.1rem
+        }
+
+        img {
+            width: 600px;
+        }
+
+        .image_pro {
+            width: 50px;
+            height: 50px;
+        }
+
+            .image_pro img {
+                width: 50px;
+                height: 50px;
+            }
+
+        .hopchua, .infocomment {
+            display: flex;
+        }
+
+        .infocomment {
+            flex-direction: column;
+        }
+
+            .infocomment span {
+                padding-left: 10px;
+            }
+
+        .profile_name {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .date_time {
+            color: rgb(172, 172, 172);
+        }
+
+        .evaluate {
+            font-size: 1.1rem;
+        }
+
+        .comment {
+            width: 500px;
+        }
+
+        .form-submit {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .name, #content {
+            width: 100%;
+            padding: 4px;
+            border-radius: 3px;
+            box-shadow: 1px 1px 3px 2px #e7e6e6;
+            border: 1px solid #b1afaf;
+            padding-left: 10px;
+            padding-right: 10px;
+            color: #333333;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .name {
+            margin-bottom: 5px;
+            height: 20px;
+        }
+
+            .name:hover, #content:hover {
+                box-shadow: 1px 1px 5px 1px #67c3e7;
+            }
+
+        ._2tga._8j9w {
+            font-size: 11px;
+        }
+    </style>
+</head>
+<main>
+    <section class="container">
+        <div class="site-content">
+            <div class="row">
+                <div class="col">
+                    <div class="posts">
+                        <div class="post-content" data-aos="zoom-in" data-aos-delay="200">
+                            <div class="post-image">
+                                <div>
+                                    <img src="@Model.Image" class="img" alt="hinh anh">
+                                </div>
+                                <div class="post-info flex-row">
+                                    <span><i class="fas fa-user text-gray"></i>&nbsp;&nbsp;@Model.CreatedBy</span>
+                                    <span><i class="fas fa-calendar-alt text-gray"></i>&nbsp;&nbsp;@Model.CreatedDate.Value.ToString("dd/MM/yyyy")</span>
+                                    <span>@Model.ViewCount lượt xem</span>
+                                </div>
+                            </div>
+                            <div class="post-title">
+                                <a style="font-family:'Times New Roman', Times, serif;font-weight: 600;" href="#">
+                                    @Model.Name
+                                </a>
+                                <p style="font-family:'Times New Roman', Times, serif;font-size:1.2rem">
+                                    @Model.Description
+                                </p>
+                                @Html.Raw(Model.Detail)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fb-like" style="margin-left: 32px; font-size: 11px" data-href="@currentURL" data-width="" data-layout="button" data-action="like" data-size="large" data-share="true"></div>
+                    <div id="app" style="padding: 0 32px;">
+                        <div class="page-header">
+                            <h1 style="font-size: 1.7rem;"><small class="pull-right">{{comments.length}} comments</small> Comments </h1>
+                        </div>
+                        <div class="comments-list">
+                            <div class="media" v-for="com in comments">
+                                <div class="comment">
+                                    <div class="hopchua">
+                                        <div class="image_pro">
+                                            <img src="~/Assets/vendor/images/avt.png" alt="Profile">
+                                        </div>
+                                        <div class="info">
+                                            <div class="infocomment">
+                                                <span class="profile_name">{{com.Name}}</span>
+                                                <span class="date_time">{{com.CreatedDate}}</span>
+                                                <span class="evaluate">{{com.Message}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                            </div>
+                        </div>
+                        <div>
+                            <br />
+                            <p style="margin-bottom: 8px">Để lại bình luận</p>
+                            <div>
+                                <form onsubmit="return false;">
+                                    <input type="text" id="Name" placeholder="Họ và tên" v-model="comment.Name" class="form-control" required/>
+                                    <input type="text" id="Email" placeholder="Địa chỉ email" v-model="comment.Email" class="form-control" style="margin-top: 8px" required/>
+                                    <textarea rows="5" style="margin: 8px 0px;" placeholder="Nội dung bình luận" id="Body" v-model="comment.Message" class="form-control" required></textarea>
+                                    <button class="btn btn-success" style="margin-bottom: 8px; padding: 8px 30px" v-on:click="submit_comment()" id="btnSubmitComment">Đăng</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <aside class="sidebar">
+                <div class="popular-post">
+                    <h2 style="margin-top: 20px; text-align: center">Popular</h2>
+                    @foreach (var item in listXemNhieu)
+                    {
+                        linkPost = "/tin-tuc/" + @item.MetaTitle + "--" + item.ID;
+                        <div class="post-content" data-aos="flip-up" data-aos-delay="200">
+                            <div class="post-image">
+                                <div>
+                                    <img src="@item.Image" class="img" alt="hinh anh">
+                                </div>
+                                <div class="post-info flex-row">
+                                    <span>
+                                        <i class="fas fa-calendar-alt text-gray"></i>&nbsp;&nbsp;@item.CreatedDate.Value.ToString("dd/MM/yyyy")
+                                    </span>
+                                    <span>@item.ViewCount lượt xem</span>
+                                </div>
+                            </div>
+                            <div class="post-title">
+                                <a href="@linkPost">@item.Name</a>
+                            </div>
+                        </div>
+                    }
+            </aside>
+        </div>
+    </section>
+</main>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v11.0&appId=333334491176312&autoLogAppEvents=1" nonce="4bpeeLiL"></script>
+<script>ds
+    var pusher = new Pusher('893065969d30e8006463', {
+        cluster: 'ap1'
+    });
+    var my_channel = pusher.subscribe('asp_channel');
+    var app = new Vue({
+        el: '#app',
+        data: {
+            comments: [],
+            comment: {
+                Name: '',
+                Message: '',
+                Email: '',
+                CreatedDate: '',
+                PostID: @Model.ID,
+            }
+        },
+        created: function() {
+            this.get_comments();
+            this.listen();
+        },
+        methods: {
+            get_comments: function() {
+                axios.get('@Url.Action("Comments", "Content", new { id = @Model.ID }, protocol: Request.Url.Scheme)')
+                    .then((response) => {
+                        this.comments = response.data;
+                        for (var i = 0; i < this.comments.length; i++) {
+                            var date = new Date(parseInt(this.comments[i].CreatedDate.substr(6)));
+                            var dateStr =
+                                ("00" + date.getDate()).slice(-2) + "/" +
+                                ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
+                                date.getFullYear() + " " +
+                                ("00" + date.getHours()).slice(-2) + ":" +
+                                ("00" + date.getMinutes()).slice(-2) + ":" +
+                                ("00" + date.getSeconds()).slice(-2);
+                            this.comments[i].CreatedDate = dateStr;
+                        }
+                    });
+            },
+            listen: function() {
+                my_channel.bind("asp_event", (data) => {
+                    if ((data.Email != "" && data.Name != "" && data.Message != "") && data.PostID == this.comment.PostID) {
+                        var date = new Date();
+                        var dateStr =
+                            ("00" + date.getDate()).slice(-2) + "/" +
+                            ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
+                            date.getFullYear() + " " +
+                            ("00" + date.getHours()).slice(-2) + ":" +
+                            ("00" + date.getMinutes()).slice(-2) + ":" +
+                            ("00" + date.getSeconds()).slice(-2);
+                        data.CreatedDate = dateStr;
+                        this.comments.push(data);
+                    }
+                })
+            },
+            submit_comment: function() {
+                axios.post('@Url.Action("Comment", "Content", new {}, protocol: Request.Url.Scheme)', this.comment)
+                    .then((response) => {
+                        this.comment.Name = '';
+                        this.comment.Message = '';
+                        this.comment.Email = '';
+                    });
+            }
+        }
+    });
+</script>
+<script src="~/Scripts/jquery.signalR-2.4.2.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<script>
+    $(function () {
+        var chat = $.connection.chat;
+        loadClient();
+        console.log("load done!!!");
+        $.connection.hub.start().done(function() {
+            $('#btnSubmitComment').click(function () {
+                var msg = $('#Body').val();
+                var name = $('#Name').val();
+                chat.server.message(msg, name);
+            });
+        });
+        function loadClient() {
+            chat.client.message = function (msg, name) {
+                var date = new Date();
+                var dateStr =
+                    ("00" + date.getDate()).slice(-2) + "/" +
+                    ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
+                    date.getFullYear() + " " +
+                    ("00" + date.getHours()).slice(-2) + ":" +
+                    ("00" + date.getMinutes()).slice(-2) + ":" +
+                    ("00" + date.getSeconds()).slice(-2);
+                var ngayDang = dateStr;
+                $('.comments-list').append("<div class='media' v-for='com in comments'> <div class='comment'> <div class='hopchua'> <div class='image_pro'> <img src='/Assets/vendor/images/avt.png' alt='Profile'> </div> <div class='info'> <div class='infocomment'> <span class='profile_name'>"+name+"</span> <span class='date_time'>"+ngayDang+"</span> <span class='evaluate'>"+msg+"</span> </div> </div> </div> </div> <hr /> </div>");
+            }
+        }
+    });
+</script>
+<script src="/Assets/blog/js/owl.carousel.min.js"></script>
+<script src="/Assets/blog/js/aos.js"></script>
+<script src="/Assets/blog/js/main.js"></script>
+
+
+

@@ -1,0 +1,252 @@
+﻿<!--
+author: W3layouts
+author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MOLLA STORE</title>
+    <meta name="description" content="MOLLA STORE">
+    <meta name="keywords" content="MOLLA là một cửa hàng chuyên về bán linh kiện điện tử, 
+          nơi bạn có thể tìm thấy đa dạng sản phẩm chất lượng cao và dịch vụ tận tâm. ">
+          @*đồ ăn vặt, đồ gia dụng, siêu thị, hôm nay mua gì, 
+          đi chợ covid 19, đi chợ mùa dịch">
+          đồ ăn vặt, đồ gia dụng, siêu thị, hôm nay mua gì, 
+          đi chợ covid 19, đi chợ mùa dịch">
+          đồ ăn vặt, đồ gia dụng, siêu thị, hôm nay mua gì, 
+          đi chợ covid 19, đi chợ mùa dịch">*@
+    <!-- for-mobile-apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript">
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+               function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+    <link rel="stylesheet" href="~/Assets/client/css/bootstrap.css" />
+    <link href="~/Assets/client/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Assets/client/css/header_css.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Assets/client/css/bootstrap-social.css" rel="stylesheet" />
+    <link href="~/Assets/client/css/font-awesome.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <link href="/Assets/client/css/jquery-ui.css" rel="stylesheet" />
+
+    <!-- js -->
+    <script src="~/Assets/client/js/jquery-1.11.1.min.js"></script>
+    <script src="/Assets/client/js/jquery-ui.js"></script>
+
+    <!-- //js -->
+    <link href='//fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+
+    <!-- start-smoth-scrolling -->
+    <script type="text/javascript" src="~/Assets/client/js/move-top.js"></script>
+    <script type="text/javascript" src="~/Assets/client/js/easing.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+            });
+        });
+    </script>
+    <!-- start-smoth-scrolling -->
+</head>
+
+<body>
+    <!-- Metu -->
+    <script>window.MBID = "p0klbpFI8";</script>
+    <script defer src="https://menu.metu.vn/static/js/sdk.js?container=body"></script>
+    <!-- header -->
+    <div class=" flex_v content_v">
+        <div class="form_v">
+            <form action="/tim-kiem" method="GET" class="form_v1">
+                <input type="text" id="txtKeyword" placeholder="Tìm kiếm sản phẩm" class="text_search_v" name="keyword">
+                <button type="submit" class="submit_v" name="search"><i class="bx bx-search"></i></button>
+            </form>
+        </div>
+        <div class="right_v">
+            <a href="/Cart"><span class="xem_gio_hang">Xem giỏ hàng </span><span class="gio_hang">Giỏ hàng </span><span class="cart_v">Cart </span><i class="bx bx-cart"></i></a>
+            <div class="user_v">
+                <i class="bx bx-user"></i>
+                <ul class="log_v">
+                    @{
+                        var session = (SuperMarketK.Common.UserLogin)Session[SuperMarketK.Common.CommonContants.USER_SESSION];
+                    }
+                    @if (session == null)
+                    {
+                        <li class="log_in_v"><a href="/dang-nhap">Đăng nhập</a></li>
+                        <li class="regis_v"><a href="/dang-ky">Đăng ký</a></li>
+                    }
+                    else
+                    {
+                        <li class="log_in_v"><a href="/customer">@session.Name</a></li>
+                        <li class="regis_v"><a href="/User/Logout">Đăng xuất</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    @*<div class="row agileits_header">
+            <div class="w3l_search">
+                <form action="/tim-kiem" method="get">
+                    <input type="text" name="keyword" id="txtKeyword" placeholder="Tìm kiếm sản phẩm" required="">
+                    <input type="submit" value=" ">
+                </form>
+            </div>
+            <div class="product_list_header" style="margin-inline-start: 600px; margin-inline-end: -150px">
+                <input type="button" name="submit" value="Xem giỏ hàng" class="button" onclick="location.href = '/Cart';" />
+            </div>
+            <div class="w3l_header_right">
+                <ul>
+                    <li class="dropdown profile_details_drop">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+                        <div class="mega-dropdown-menu">
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>*@
+    <!-- script-for sticky-nav -->
+    @*<script>
+            $(document).ready(function () {
+                var navoffeset = $(".agileits_header").offset().top;
+                $(window).scroll(function () {
+                    var scrollpos = $(window).scrollTop();
+                    if (scrollpos >= navoffeset) {
+                        $(".agileits_header").addClass("fixed");
+                    } else {
+                        $(".agileits_header").removeClass("fixed");
+                    }
+                });
+
+            });
+        </script>*@
+    <!-- //script-for sticky-nav -->
+    <div class="logo_products">
+        <div class="container">
+            <div class="w3ls_logo_products_left header_2">
+                <div class="logo_v">
+                    @{Html.RenderAction("Logo", "Home");}
+                </div>
+                <div class="menu_v">
+                    <ul class="main_header_all">
+                        @{Html.RenderAction("MainMenu", "Home");}
+                        <li><a class="main_header phone_v" href="#"><i class="bx bx-phone">(+84)999.999.999</i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="body_v">
+        <!-- //header -->
+        @RenderSection("treeMap", required: false)
+        <!-- banner -->
+        <div class="banner">
+            @RenderBody()
+            <div class="clearfix"></div>
+        </div>
+        <!-- banner -->
+        <!-- top-brands -->
+        @RenderSection("aboutTeam", required: false)
+        @RenderSection("rauCuQua", required: false)
+        @RenderSection("topBrand", required: false)
+
+        <!-- //top-brands -->
+        <!-- newsletter -->
+        @RenderPage("_NewsLetter.cshtml")
+        <!-- //newsletter -->
+        <!-- footer -->
+        @{Html.RenderAction("_Footer", "Home");}
+        <!-- //footer -->
+        <!-- Bootstrap Core JavaScript -->
+        <script src="~/Assets/client/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $(".dropdown").hover(
+                    function () {
+                        $('.dropdown-menu', this).stop(true, true).slideDown("fast");
+                        $(this).toggleClass('open');
+                    },
+                    function () {
+                        $('.dropdown-menu', this).stop(true, true).slideUp("fast");
+                        $(this).toggleClass('open');
+                    }
+                );
+            });
+        </script>
+        <!-- here stars scrolling icon -->
+        <script type="text/javascript">
+            $(document).ready(function () {
+                /*
+                    var defaults = {
+                    containerID: 'toTop', // fading element id
+                    containerHoverID: 'toTopHover', // fading element hover id
+                    scrollSpeed: 1200,
+                    easingType: 'linear'
+                    };
+                */
+
+                $().UItoTop({ easingType: 'easeOutQuart' });
+
+            });
+        </script>
+        <!-- //here ends scrolling icon -->
+        <script src="~/Assets/client/js/minicart.js"></script>
+        <script>
+            paypal.minicart.render();
+
+            paypal.minicart.cart.on('checkout', function (evt) {
+                var items = this.items(),
+                    len = items.length,
+                    total = 0,
+                    i;
+
+                // Count the number of each item in the cart
+                for (i = 0; i < len; i++) {
+                    total += items[i].get('quantity');
+                }
+
+                if (total < 3) {
+                    alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
+                    evt.preventDefault();
+                }
+            });
+
+        </script>
+        <script src="~/Assets/client/js/controller/baseController.js"></script>
+        @RenderSection("jsFooter", required: false)
+
+        <!-- Messenger Chat Plugin Code -->
+        <div id="fb-root"></div>
+
+        <!-- Your Chat Plugin code -->
+        <div id="fb-customer-chat" class="fb-customerchat">
+        </div>
+        <script>
+            var chatbox = document.getElementById('fb-customer-chat');
+            chatbox.setAttribute("page_id", "107717534786738");
+            chatbox.setAttribute("attribution", "page_inbox");
+            window.fbAsyncInit = function () {
+                FB.init({
+                    xfbml: true,
+                    version: 'v11.0'
+                });
+            };
+
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+    </div>
+</body>
+</html>

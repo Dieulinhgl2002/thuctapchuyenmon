@@ -1,0 +1,141 @@
+﻿@model List<Model.EntityFramework.Content>
+@{
+    ViewBag.Title = "Tin tức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //int n = Model.Count / 2;
+    //if (Model.Count % 2 != 0)
+    //{
+    //    n++;
+    //}
+    //int count = 0;
+    //int size = Model.Count;
+    //int m = size - 2 > 0 ? 2 : size;
+    string linkPost = null;
+    List<Model.EntityFramework.Content> listXemNhieu = (List<Model.EntityFramework.Content>)ViewBag.ListXemNhieu;
+}
+
+@section treeMap{
+    <div class="products-breadcrumb">
+        <div class="container">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Home</a><span>|</span></li>
+                <li>Tin tức</li>
+            </ul>
+        </div>
+    </div>
+}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Blooger</title>
+    <link rel="stylesheet" href="/Assets/blog/css/all.css">
+    <link rel="stylesheet" href="/Assets/blog/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/Assets/blog/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/Assets/blog/css/aos.css">
+    <link rel="stylesheet" href="/Assets/blog/css/Style.css">
+</head>
+<main>
+    <section class="container">
+        <div class="site-content">
+            <div class="posts">
+                @foreach (var item in Model)
+                {
+                    linkPost = "/tin-tuc/" + @item.MetaTitle + "--" + item.ID;
+                    <div class="post-content" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="post-image">
+                            <div>
+                                <img src="@item.Image" class="img" alt="hinh anh">
+                            </div>
+                            <div class="post-info flex-row">
+                                <span><i class="fas fa-user text-gray"></i>&nbsp;&nbsp;@item.CreatedBy</span>
+                                <span><i class="fas fa-calendar-alt text-gray"></i>&nbsp;&nbsp;@item.CreatedDate.Value.ToString("dd/MM/yyyy")</span>
+                                <span>@item.ViewCount lượt xem</span>
+                            </div>
+                        </div>
+                        <div class="post-title">
+                            <a style="font-family:'Times New Roman', Times, serif;font-weight: 600;" href="@linkPost">
+                                @item.Name
+                            </a>
+                            <p style="font-family:'Times New Roman', Times, serif;font-size:1.2rem">
+                                @item.Description
+                            </p>
+
+                            <a href="@linkPost" class="btn post-btn">Read more &nbsp; <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <hr>
+                    </div>
+                }
+            </div>
+            <aside class="sidebar">
+                <div class="popular-post">
+                    <h2 style="margin-top: 20px; text-align: center">Popular</h2>
+                    @foreach (var item in listXemNhieu)
+                    {
+                        linkPost = "/tin-tuc/" + @item.MetaTitle + "--" + item.ID;
+                        <div class="post-content" data-aos="flip-up" data-aos-delay="200">
+                            <div class="post-image">
+                                <div>
+                                    <img src="@item.Image" class="img" alt="hinh anh">
+                                </div>
+                                <div class="post-info flex-row">
+                                    <span>
+                                        <i class="fas fa-calendar-alt text-gray"></i>&nbsp;&nbsp;@item.CreatedDate.Value.ToString("dd/MM/yyyy")
+                                    </span>
+                                    <span>@item.ViewCount lượt xem</span>
+                                </div>
+                            </div>
+                            <div class="post-title">
+                                <a href="@linkPost">@item.Name</a>
+                            </div>
+                        </div>
+                    }
+            </aside>
+        </div>
+    </section>
+</main>
+<script src="/Assets/blog/js/owl.carousel.min.js"></script>
+<script src="/Assets/blog/js/aos.js"></script>
+<script src="/Assets/blog/js/main.js"></script>
+@*@{Html.RenderAction("ProductCategory", "Product");}
+    <div class="w3l_banner_nav_right">
+        <div class="events">
+            <h3>Tin Tức</h3>
+            @for (int i = 0; i < n; i++)
+            {
+                <div class="events-bottom">
+                    @{
+                        for (int j = 0; j < m; j++)
+                        {
+                            <div class="col-md-6 events_bottom_left">
+                                <div class="col-md-4 events_bottom_left1">
+                                    <div class="events_bottom_left1_grid">
+                                        <h4>@Model[count].CreatedDate.Value.Day</h4>
+                                        <p>Tháng @Model[count].CreatedDate.Value.Month, @Model[count].CreatedDate.Value.Year</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 events_bottom_left2">
+                                    <img src="@Model[count].Image" alt=" " class="img-responsive" />
+                                    <h4>@Model[count].Name</h4>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>@Model[count].CreatedDate.Value.TimeOfDay.ToString("hh\\:mm\\:ss")</li>
+                                        <li><i class="fa fa-user" aria-hidden="true"></i><a href="#">@Model[count].CreatedBy</a></li>
+                                    </ul>
+                                    <p>
+                                        @Model[count].Description
+                                    </p>
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                            count++;
+                        }
+                        size = size - 2;
+                        m = size - 2 > 0 ? 2 : size;
+                    }
+                </div>
+            }
+            <div class="clearfix"></div>
+        </div>
+    </div>*@
+
+

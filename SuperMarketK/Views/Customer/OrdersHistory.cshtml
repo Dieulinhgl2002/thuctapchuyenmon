@@ -1,0 +1,158 @@
+﻿@model IEnumerable<SuperMarketK.Models.UserOrderModel>
+
+@{
+    ViewBag.Title = "Lịch sử mua hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section treeMap{
+    <div class="products-breadcrumb">
+        <div class="container">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Home</a><span>|</span></li>
+                <li>My Profile</li>
+            </ul>
+        </div>
+    </div>
+}
+
+<style>
+    .row {
+        margin: 7px -10px;
+    }
+
+    .block_menu_profile {
+        border-top: 3px solid #8bbea5;
+        border-left: 1px solid #e5e5e5;
+        border-right: 1px solid #e5e5e5;
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    .menu_profile {
+        width: 100%;
+        float: left;
+    }
+
+    .item_menu_profile.active {
+        background: #f7f7f7;
+        color: #ff6600;
+    }
+
+    .item_menu_profile {
+        padding: 7px 10px;
+        display: block;
+        position: relative;
+    }
+
+    .width_common {
+        width: 100%;
+        float: left;
+    }
+
+    .space_bottom_20 {
+        margin-bottom: 20px;
+    }
+
+    .title_profile_page {
+        margin-bottom: 10px;
+        font-size: 18px;
+        font-weight: 700;
+        position: relative;
+        width: 100%;
+        float: left;
+    }
+    table, th, td {
+        border: 1px solid black;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-3  col-sm-3">
+            <div class="block_menu_profile space_bottom_20">
+                <div class="menu_profile width_common">
+                    <a href="/Customer" class="item_menu_profile">Thông tin tài khoản</a>
+                    <a href="/Customer/ChangePassword" class="item_menu_profile ">Thay đổi mật khẩu</a>
+                    <a href="/Customer/OrdersHistory" class="item_menu_profile active">Lịch sử mua hàng</a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-9">
+            <div class="width_common space_bottom_20">
+                <div class="title_profile_page">Lịch Sử Mua Hàng</div>
+                @if (Model.Count() > 0)
+                {
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ID)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ShipName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ShipMobile)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TongTien)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StatusDelivery)
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            string tinhTrang = "Đặt hàng thành công";
+                            if (item.StatusDelivery == 1)
+                            {
+                                tinhTrang = "Kiểm hàng và đóng gói";
+                            }
+                            else if (item.StatusDelivery == 2)
+                            {
+                                tinhTrang = "Chuyển cho shipper";
+                            }
+                            else if (item.StatusDelivery == 3)
+                            {
+                                tinhTrang = "Đã giao hàng";
+                            }
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ID)
+                                </td>
+                                <td>
+                                    @item.CreatedDate.ToString("dd-MM-yyyy")
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ShipName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ShipMobile)
+                                </td>
+                                <td>
+                                    @item.TongTien.ToString("N0")
+                                </td>
+                                <td>
+                                    @tinhTrang
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                }
+                else
+                {
+                    <div class="alert alert-primary" role="alert">
+                        Bạn chưa có đơn hàng nào
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

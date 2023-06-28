@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "NotFound";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section treeMap{
+    <div class="products-breadcrumb">
+        <div class="container">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Home</a><span>|</span></li>
+                <li>Not Found</li>
+            </ul>
+        </div>
+    </div>
+}
+@{Html.RenderAction("ProductCategory", "Product");}
+<div class="row w3l_banner_nav_right">
+    <div class="col-lg-offset-3">
+        <img class="rounded" width="50%" src="~/Assets/vendor/images/pagenotfound.png" />
+    </div>
+</div>
